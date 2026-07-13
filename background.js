@@ -1,4 +1,8 @@
 
+let a = chrome.tabs;
+
+console.log(a);
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status !== 'complete') return;
     chrome.tabs.sendMessage(tabId, { message: 'sendMessage from background.js' }, (response) => {
