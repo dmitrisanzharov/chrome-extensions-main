@@ -12,6 +12,11 @@
         "notifications",
         "alarms"
     ],
+    "icons": {
+        "16": "assets/575927.png",
+        "48": "assets/575927.png",
+        "128": "assets/575927.png"
+    },
     "background": {
         "service_worker": "background.js"
     },
@@ -22,6 +27,8 @@
         }
     ],
     "action": {
+        "default_title": "aaa_Dimi_Extension action title",
+        "default_icon": "assets/gear.png",
         "default_popup": "popup.html"
     },
     "web_accessible_resources": [
