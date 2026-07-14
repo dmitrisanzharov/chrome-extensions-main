@@ -1,15 +1,39 @@
-
-let a = chrome.tabs;
-
-console.log(a);
+import { EXPORTED_STRING } from './constants.js';
+import './foo.js';
+console.log('EXPORTED_STRING: ', EXPORTED_STRING);
+console.log('background.js loaded');
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (changeInfo.status !== 'complete') return;
-    chrome.tabs.sendMessage(tabId, { message: 'sendMessage from background.js' }, (response) => {
-        console.log('this is response from content script: ', response);
-    });
+    const isTimer = tab.url.includes('https://vclock.com/');
+
+    const isComplete = changeInfo.status === 'complete';
+
+    if (isTimer) {
+        return;
+    }
+
+    if (isComplete) {
+        console.log('============================');
+        console.log('tabId: ', tabId);
+        console.log('changeInfo: ', changeInfo);
+        console.log('tab: ', tab);
+
+        chrome.tabs.sendMessage(tabId, { message: 'yep, worked' });
+
+
+        // end of isComplete
+    }
+
+    
 });
 
-// let a = chrome.runtime.getURL('assets/gear.png');
+chrome.storage.local.set({ keyOne: 'valueOne', keyTwo: 'valueTwo' });
 
-// console.log(a);
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log('============================');
+    console.log('message received in background.js: ', message);
+    console.log('sender: ', sender);
+    // sendResponse({ message: 'this is response from background.js' });
+});
+

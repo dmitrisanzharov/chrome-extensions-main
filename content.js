@@ -5,7 +5,17 @@
         console.log('============================');
         console.log('message received in content.js: ', message);
         console.log('sender: ', sender);
-        sendResponse({ message: 'this is response from content.js' });
+        // sendResponse({ message: 'this is response from content.js' });
+    });
+
+    chrome.runtime.sendMessage({ message: 'sendMessage from content.js' });
+
+    setTimeout(() => {
+        chrome.runtime.sendMessage({ message: 'sendMessage from content.js 2' });
+    }, 2000);
+
+    chrome.storage.local.get(null, (items) => {
+        console.log('items: ', items);
     });
 
     // function makeDevSpace() {
@@ -33,4 +43,22 @@
     // }
 
     // makeDevSpace();
+
+    // extension logic
+
+    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+        const isOnYouTube = tab.url.includes('youtube.com');
+        const isReady = changeInfo.status === 'complete';
+
+        if (!isOnYouTube || !isReady) {
+            return;
+        }
+
+        // we are on youtube
+        console.log('============================');
+        console.log('on youtube');
+
+
+        
+    });
 })();
