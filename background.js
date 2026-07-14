@@ -1,10 +1,9 @@
-import { EXPORTED_STRING } from './constants.js';
-import './foo.js';
-console.log('EXPORTED_STRING: ', EXPORTED_STRING);
 console.log('background.js loaded');
+
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     const isTimer = tab.url.includes('https://vclock.com/');
+    const isYoutube = tab.url.includes('youtube.com');
 
     const isComplete = changeInfo.status === 'complete';
 
@@ -12,13 +11,13 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         return;
     }
 
-    if (isComplete) {
+    if (isComplete && isYoutube) {
         console.log('============================');
         console.log('tabId: ', tabId);
         console.log('changeInfo: ', changeInfo);
         console.log('tab: ', tab);
 
-        chrome.tabs.sendMessage(tabId, { message: 'yep, worked' });
+        chrome.tabs.sendMessage(tabId, { message: 'ON_YOUTUBE', payload: 'we are on youtube', tabId, tab });
 
 
         // end of isComplete
@@ -27,13 +26,13 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     
 });
 
-chrome.storage.local.set({ keyOne: 'valueOne', keyTwo: 'valueTwo' });
+// chrome.storage.local.set({ keyOne: 'valueOne', keyTwo: 'valueTwo' });
 
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log('============================');
-    console.log('message received in background.js: ', message);
-    console.log('sender: ', sender);
-    // sendResponse({ message: 'this is response from background.js' });
-});
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//     console.log('============================');
+//     console.log('message received in background.js: ', message);
+//     console.log('sender: ', sender);
+//     // sendResponse({ message: 'this is response from background.js' });
+// });
 

@@ -5,18 +5,23 @@
         console.log('============================');
         console.log('message received in content.js: ', message);
         console.log('sender: ', sender);
+
+
+        if(message.message === 'ON_YOUTUBE') {
+            console.log('we are on youtube in content.js', message);
+        }
         // sendResponse({ message: 'this is response from content.js' });
     });
 
-    chrome.runtime.sendMessage({ message: 'sendMessage from content.js' });
+    // chrome.runtime.sendMessage({ message: 'sendMessage from content.js' });
 
-    setTimeout(() => {
-        chrome.runtime.sendMessage({ message: 'sendMessage from content.js 2' });
-    }, 2000);
+    // setTimeout(() => {
+    //     chrome.runtime.sendMessage({ message: 'sendMessage from content.js 2' });
+    // }, 2000);
 
-    chrome.storage.local.get(null, (items) => {
-        console.log('items: ', items);
-    });
+    // chrome.storage.local.get(null, (items) => {
+    //     console.log('items: ', items);
+    // });
 
     // function makeDevSpace() {
     //     const devSpaceDiv = document.createElement('div');
@@ -46,19 +51,6 @@
 
     // extension logic
 
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-        const isOnYouTube = tab.url.includes('youtube.com');
-        const isReady = changeInfo.status === 'complete';
-
-        if (!isOnYouTube || !isReady) {
-            return;
-        }
-
-        // we are on youtube
-        console.log('============================');
-        console.log('on youtube');
 
 
-        
-    });
 })();
