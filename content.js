@@ -4,6 +4,7 @@
     let videoId = null;
 
     function removeDuplicates(arr) {
+        console.log('duplicate removed');
     return [
         ...new Map(
             arr.map(item => [
@@ -42,10 +43,10 @@
     }
 
     function handleClick() {
-        console.log('clicked');
+        // console.log('clicked');
 
         const currentTimeStamp = document.getElementsByClassName('video-stream')[0].currentTime;
-        console.log('currentTimeStamp: ', currentTimeStamp);
+        // console.log('currentTimeStamp: ', currentTimeStamp);
 
         const videoObj = {
             currentTimeStamp,
@@ -53,22 +54,22 @@
             videoId
         };
 
-        console.log('videoObj: ', videoObj);
+        // console.log('videoObj: ', videoObj);
 
         // check bookmarks
         chrome.storage.local.get(null, (result) => {
             const isOldVideo = videoId in result;
 
-            const videoObject = result[videoId];
-            console.log('videoObject: ', videoObject);
+            const videoObjectToAdd = result[videoId];
+            // console.log('videoObject: ', videoObject);
 
             if (isOldVideo) {
-                videoObject.timeStamps.push(videoObj);
+                videoObjectToAdd.timeStamps.push(videoObj);
 
-                videoObject.timeStamps = removeDuplicates(videoObject.timeStamps);
+                videoObjectToAdd.timeStamps = removeDuplicates(videoObjectToAdd.timeStamps);
 
                 chrome.storage.local.set({
-                    [videoId]: videoObject
+                    [videoId]: videoObjectToAdd
                 });
 
             } else {
