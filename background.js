@@ -3,7 +3,7 @@ console.log('background.js loaded');
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     const isTimer = tab.url.includes('https://vclock.com/');
-    const isYoutube = tab.url.includes('youtube.com');
+    const isYoutube = tab.url.includes('youtube.com/watch');
 
     const isComplete = changeInfo.status === 'complete';
 
@@ -17,7 +17,11 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         console.log('changeInfo: ', changeInfo);
         console.log('tab: ', tab);
 
-        chrome.tabs.sendMessage(tabId, { message: 'ON_YOUTUBE', payload: 'we are on youtube', tabId, tab });
+
+        const urlParamsObj = Object.fromEntries(new URL(tab.url).searchParams);
+        console.log("urlParamsObj: ", urlParamsObj);
+
+        chrome.tabs.sendMessage(tabId, { message: 'ON_YOUTUBE_VIDEO', tabId, tab, urlParamsObj });
 
 
         // end of isComplete
