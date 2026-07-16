@@ -2,6 +2,9 @@ import { getCurrentTab } from './utils.js';
 console.log('popup.js loaded');
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+    const popupContainer = document.getElementById('popup_container');
+
     const mainTab = await getCurrentTab();
     // console.log("mainTab: ", mainTab);
 
@@ -16,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const mainDiv = document.createElement('div');
         mainDiv.innerHTML = 'mainDiv';
-        document.body.appendChild(mainDiv);
+        popupContainer.appendChild(mainDiv);
 
         // display all bookmarks
         chrome.storage.local.get(null, (result) => {
@@ -32,22 +35,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const li = document.createElement('li');
                     li.textContent = timeStampObj.humanReadableTimeStamp;
                     li.style.cursor = 'pointer';
-                    li.style.marginBottom = '5px';
                     li.addEventListener('click', () => {
-                        chrome.scripting.executeScript({
-                            target: { tabId: mainTab.id },
-                            func: (seconds) => {
-                                document.querySelector('video').currentTime = seconds;
-                            },
-                            args: [timeStampObj.currentTimeStamp],
+                        chrome.tabs.sendMessage(mainTab.id, {
+                            message: 'SEEK_TO_TIMESTAMP',
+                            timeStampObj
                         });
                     });
                     ul.appendChild(li);
                 });
                 mainDiv.appendChild(ul);
-
-
             }
         });
+
+        // button to clear everything in chrome.storage.local
+        const clearAllBtn = document.createElement('button');
+        clearAllBtn.textContent = 'Clear All';
+        clearAllBtn.addEventListener('click', () => {
+            chrome.storage.local.remove(videoId, () => {
+                
+                popupContainer.innerHTML = '';
+                const noBookmarksMessage = document.createElement('p');
+                noBookmarksMessage.textContent = 'No bookmarks yet.';
+                popupContainer.appendChild(noBookmarksMessage);
+            });
+        });
+        popupContainer.appendChild(clearAllBtn);
     }
+
+    // end of DOMContentLoaded
 });

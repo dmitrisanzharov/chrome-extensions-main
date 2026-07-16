@@ -125,6 +125,17 @@
 
             videoId = message.urlParamsObj.v;
         }
+
+        if (message.message === 'SEEK_TO_TIMESTAMP') {
+
+            console.log('---------------------------------');
+            console.log('message: ', message);
+
+            const video = document.querySelector('video');
+            if (video) {
+                video.currentTime = message.timeStampObj.currentTimeStamp;
+            }
+        }
     });
 
     // DOM manipulation practice
