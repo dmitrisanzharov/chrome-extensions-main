@@ -1,27 +1,33 @@
 {
-   "name": "aaa_Rev3_extension",
-   "version": "1.0",
-   "description": "Extension Revision 3",
-   "manifest_version": 3,
-   "permissions": [
-       "tabs",
-       "activeTab",
-       "storage",
-       "scripting",
-       "contextMenus",
-       "notifications",
-       "alarms"
-   ],
-   "background": {
-       "service_worker": "background.js"
-   },
-   "content_scripts": [
-       {
-           "matches": ["<all_urls>"],
-           "js": ["content.js"]
-       }
-   ],
-   "action": {
-       "default_popup": "popup.html"
-   }
+    "name": "aaa_Rev3_extension",
+    "version": "1.0",
+    "description": "Extension Revision 3",
+    "manifest_version": 3,
+    "permissions": ["tabs", "activeTab", "storage", "scripting", "contextMenus", "notifications", "alarms"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        },
+        {
+            "matches": ["http://*.youtube.com/*", "https://*.youtube.com/*"],
+            "js": ["contentScript_youtube.js"]
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": ["assets/*"],
+        "matches": ["<all_urls>"]
+    }],
+    "icons": {
+        "16": "assets/freeIcon.png",
+        "32": "assets/freeIcon.png",
+        "48": "assets/freeIcon.png",
+        "128": "assets/freeIcon.png"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    }
 }
