@@ -11,10 +11,6 @@
         {
             "matches": ["<all_urls>"],
             "js": ["content.js"]
-        },
-        {
-            "matches": ["http://*.youtube.com/*", "https://*.youtube.com/*"],
-            "js": ["contentScript_youtube.js"]
         }
     ],
     "web_accessible_resources": [{
