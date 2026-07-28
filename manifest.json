@@ -28,6 +28,7 @@
         "128": "assets/freeIcon.png"
     },
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_title": "title from actions"
     }
 }
