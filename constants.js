@@ -1,0 +1,1 @@
+ export const EXPORTED_STRING = 'EXPORTED STRING';

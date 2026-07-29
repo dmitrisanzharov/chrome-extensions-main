@@ -1,32 +1,41 @@
+import './autoRun.js';
+import { EXPORTED_STRING } from './constants.js';
 console.log('background.js loaded');
+console.log('EXPORTED_STRING', EXPORTED_STRING);
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    const isOnTimer = tab.url.includes('https://vclock.com/');
+// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+//     const isOnTimer = tab.url.includes('https://vclock.com/');
 
-    if (isOnTimer) {
-        // console.log('on timer skipped');
-        return;
-    }
+//     if (isOnTimer) {
+//         // console.log('on timer skipped');
+//         return;
+//     }
 
-    if (changeInfo.status === 'complete' && tab.url.includes('youtube.com')) {
-        // console.log('============================');
-        // console.log('tabId:', tabId);
-        // console.log('changeInfo:', changeInfo);
-        // console.log('tab:', tab);
+//     if (changeInfo.status === 'complete' && tab.url.includes('youtube.com')) {
+//         // console.log('============================');
+//         // console.log('tabId:', tabId);
+//         // console.log('changeInfo:', changeInfo);
+//         // console.log('tab:', tab);
 
-        // console.log('YouTube tab opened/loaded:', tab.url);
+//         // console.log('YouTube tab opened/loaded:', tab.url);
 
-        console.log('tabs', chrome.tabs);
+//         console.log('tabs', chrome.tabs);
 
-        chrome.tabs.sendMessage(tabId, {
-            message: 'omg you opened youtube'
-        });
-    }
+//         chrome.tabs.sendMessage(tabId, {
+//             message: 'omg you opened youtube'
+//         });
+//     }
 
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-        console.log('============================');
-        console.log('message received:', message);
-        console.log('sender:', sender);
-        console.log('sendResponse:', sendResponse);
-    });
+//     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//         console.log('============================');
+//         console.log('message received:', message);
+//         console.log('sender:', sender);
+//         console.log('sendResponse:', sendResponse);
+//     });
+// });
+
+chrome.storage.local.set({ foo: 'bar' }).then(() => {
+    chrome.storage.local.get(null, (items) => {
+        console.log('items', items);
+    })
 });
