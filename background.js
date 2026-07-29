@@ -1,41 +1,34 @@
-import './autoRun.js';
-import { EXPORTED_STRING } from './constants.js';
 console.log('background.js loaded');
-console.log('EXPORTED_STRING', EXPORTED_STRING);
 
-// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-//     const isOnTimer = tab.url.includes('https://vclock.com/');
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    // skip if timer
+    const isTimer = tab.url.includes('https://vclock.com/');
+    if (isTimer) return;
 
-//     if (isOnTimer) {
-//         // console.log('on timer skipped');
-//         return;
-//     }
+    // only trigger when completed and on youtube
+    const isCompleted = changeInfo.status === 'complete';
+    const isYoutube = tab.url.includes('youtube.com/watch');
+    if (isCompleted || isYoutube) {
+        console.log('============================');
+        console.log('tabId', tabId);
+        console.log('changeInfo', changeInfo);
+        console.log('tab updated', tab);
+        console.log('---------------------------------');
 
-//     if (changeInfo.status === 'complete' && tab.url.includes('youtube.com')) {
-//         // console.log('============================');
-//         // console.log('tabId:', tabId);
-//         // console.log('changeInfo:', changeInfo);
-//         // console.log('tab:', tab);
+        // make the URL object
+        const url = new URL(tab.url).searchParams;
+        console.log("url: ", url);
 
-//         // console.log('YouTube tab opened/loaded:', tab.url);
+        // make object out of 'url'
+        const urlObj = Object.fromEntries(url);
+        console.log("urlObj: ", urlObj);
 
-//         console.log('tabs', chrome.tabs);
+        // video id
+        const videoId = urlObj.v;
+        console.log("videoId: ", videoId);
 
-//         chrome.tabs.sendMessage(tabId, {
-//             message: 'omg you opened youtube'
-//         });
-//     }
-
-//     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-//         console.log('============================');
-//         console.log('message received:', message);
-//         console.log('sender:', sender);
-//         console.log('sendResponse:', sendResponse);
-//     });
-// });
-
-chrome.storage.local.set({ foo: 'bar' }).then(() => {
-    chrome.storage.local.get(null, (items) => {
-        console.log('items', items);
-    })
+        // send video id as message
+        chrome.tabs.sendMessage(tabId, { videoId });
+        
+    }
 });

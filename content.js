@@ -1,27 +1,41 @@
 (() => {
     console.log('content.js loaded');
 
-    // chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    //     console.log('============================');
-    //     console.log('message received:', message);
-    //     console.log('sender:', sender);
-    //     console.log('sendResponse:', sendResponse);
-    // });
+    // dom elements
+    const developmentContainer = document.createElement('div');
+    developmentContainer.id = 'developmentContainer';
+    developmentContainer.style = 'position: fixed; bottom: 0; left: 0; background-color: lightgray; z-index: 9999999;';
+    document.body.appendChild(developmentContainer);
 
-    // chrome.runtime.sendMessage({
-    //     from: 'content.js',
-    //     message: 'content.js sent you message 1'
-    // })
+    function onClick() {
+        console.log('clicked');
+    }
 
-    // const url = chrome.runtime.getURL('assets/freeIcon.png');
-    // console.log('url', url);
+    const plusButton = document.createElement('button');
+    plusButton.id = 'plusButton';
+    plusButton.innerText = '+';
+    plusButton.style = 'height: 50px; width: 50px; margin: 10px;';
+    plusButton.addEventListener('click', onClick);
+    developmentContainer.appendChild(plusButton);
+
+    // video TimeStamp stuff
+
+    let videoTimeStampsObj;
+
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        // console.log('============================');
+        // console.log('message', message);
+        // console.log('sender', sender);
+        // console.log('sendResponse', sendResponse);
 
 
-    // const tabs = chrome.tabs;
-    // console.log('tabs', tabs);
+        // get the videoTimeStampsObj
+        const videoId = message.videoId;
+        chrome.storage.local.get(videoId, (result) => {
+            console.log("result: ", result);
+            videoTimeStampObj = result || { videoId, timeStamps: [] }
+            console.log("videoTimeStampObj: ", videoTimeStampObj);
+        })
 
-    chrome.storage.local.get(null, (items) => {
-        console.log('items', items);
-    })
-
+    });
 })();
