@@ -28,7 +28,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         console.log("videoId: ", videoId);
 
         // send video id as message
-        chrome.tabs.sendMessage(tabId, { videoId });
+        chrome.tabs.sendMessage(tabId, { videoId, status: 'FROM_BACKGROUND_VIDEO_ID' });
         
     }
 });
