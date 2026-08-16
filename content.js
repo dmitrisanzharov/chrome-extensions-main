@@ -1,15 +1,12 @@
 (() => {
     console.log('content.js loaded');
 
-    let myDiv = document.createElement('div');
-    Object.assign(myDiv.style, {
-        color: 'red',
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        fontSize: '50px',
-        zIndex: 100000
+    chrome.runtime.onMessage.addListener((message, sender, sendResponseFn) => {
+        console.log('============================');
+        console.log('message', message);
+        console.log('sender', sender);
+        console.log('sendResponseFn', sendResponseFn);
     });
-    myDiv.innerHTML = 'Hello World';
-    document.body.appendChild(myDiv);
+
+    // document.getElementById('victorId')
 })();

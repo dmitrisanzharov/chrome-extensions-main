@@ -13,7 +13,19 @@
             "js": ["content.js"]
         }
     ],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/*"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "icons": {
+        "16": "assets/free.png",
+        "48": "assets/free.png",
+        "128": "assets/free.png"
+    },
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_title": "Dmitri Ext from Actions"
     }
 }

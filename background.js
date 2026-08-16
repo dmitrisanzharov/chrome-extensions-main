@@ -1,7 +1,8 @@
 console.log('background.js loaded');
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (tabId === 1466662731) {
+
+    if (tabId === 1466663465) {
         return;
     }
 
@@ -10,6 +11,13 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     console.log('changeInfo: ', changeInfo);
 
     if (changeInfo.status === 'complete') {
-        console.log('tab is loaded');
+        
+        chrome.tabs.sendMessage(tabId, {
+            type: 'GENERIC',
+            text: 'from background to content.js'
+        })
+
+        console.log('message sent');
+
     }
 });
