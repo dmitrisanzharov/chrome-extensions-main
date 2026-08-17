@@ -1,55 +1,22 @@
-import { EXPORTED_STRING } from './constants.js';
-
-console.log('background.js loaded');
-console.log(EXPORTED_STRING);
+console.log('background loaded');
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
-    chrome.storage.local.set({ myVarOne: 'varOne' });
+
+    const isComplete = changeInfo.status === 'complete';
+    const isYouTube = tab.url.includes('youtube.com/watch');
+
+    if(isComplete && isYouTube){
+        console.log('we are on youtube');
+
+        const href = tab.url;
+        console.log("href: ", href);
+        const urlObj = Object.fromEntries(new URL(href).searchParams.entries());
+        console.log("urlObj: ", urlObj);
+        
 
 
 
-
-
-
-
-
-    // console.log('---------------------------------');
-    // console.log('changeInfo main', changeInfo);
-
-    if (tab.url.includes('vclock')) {
-        return;
     }
 
-    if (tab.url.includes('youtube') && changeInfo.status === 'complete') {
-        console.log('you are on youtube');
-
-        chrome.tabs.sendMessage(tabId, {
-            type: 'GENERIC',
-            url: 'YOUTUBE',
-            text: 'omg you are on youtube'
-        });
-    }
-
-    // console.log('============================');
-    // console.log('tabId: ', tabId);
-    // console.log('changeInfo: ', changeInfo);
-    // console.log('tab', tab);
-
-    // if (changeInfo.status === 'complete') {
-
-    //     chrome.tabs.sendMessage(tabId, {
-    //         type: 'GENERIC',
-    //         text: 'from background to content.js'
-    //     })
-
-    //     console.log('message sent');
-
-    // }
-});
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log('---------------------------------');
-    console.log('Message from content script:', message);
-    console.log('sender', sender);
-});
+})
