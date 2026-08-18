@@ -35,3 +35,69 @@
     //     left: 0,
     //     zIndex: 10000000
     // })
+
+            // temp code
+
+        let ytDiv = document.getElementById('start');
+        let redSquare = document.createElement('div');
+        setTimeout(() => {
+            Object.assign(redSquare.style, {
+                height: '100px',
+                width: '100px',
+                backgroundColor: 'red',
+                
+            });
+
+            ytDiv.appendChild(redSquare);
+        }, 3000);
+
+
+        // attach code with observer
+
+
+        function attachRedSquare(parentElement) {
+            console.log('triggered');
+            let redSquare = document.createElement('div');
+            Object.assign(redSquare.style, {
+                height: '100px',
+                width: '100px',
+                backgroundColor: 'red'
+            });
+
+            parentElement.appendChild(redSquare);
+        }
+
+        function waitForElementToAppear(domElementString, callbackFn) {
+            const exists = document.querySelector(domElementString);
+            console.log("exists: ", exists);
+
+            if (exists) {
+                callbackFn(exists);
+                return;
+            }
+
+            const newObserver = new MutationObserver(() => {
+                const elementThatWeWantToAppear = document.querySelector(domElementString);
+                console.log("elementThatWeWantToAppear: ", elementThatWeWantToAppear);
+
+                if (elementThatWeWantToAppear) {
+                    newObserver.disconnect();
+                    callbackFn(exists);
+                    return;
+                }
+            });
+
+            // const parentElementToWatch = document.body;
+            //  let ytDiv = document.getElementById('start');
+            const parentElementToWatch = document.body;
+            console.log("parentElementToWatch: ", parentElementToWatch);
+
+            const observerOptions = {
+                childList: true,
+                subtree: true
+            };
+
+            newObserver.observe(parentElementToWatch, observerOptions);
+        }
+
+        waitForElementToAppear('#start', attachRedSquare);

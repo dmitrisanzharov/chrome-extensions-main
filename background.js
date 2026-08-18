@@ -12,8 +12,15 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         const href = tab.url;
         console.log("href: ", href);
         const urlObj = Object.fromEntries(new URL(href).searchParams.entries());
-        console.log("urlObj: ", urlObj);
+        console.log("urlObj: ", urlObj); // video is under V key
         
+
+        chrome.tabs.sendMessage(tabId, {
+            type: 'YOUTUBE_VIDEO',
+            tabId: tabId,
+            tabObj: tab,
+            videoUrlObj: urlObj
+        })
 
 
 
