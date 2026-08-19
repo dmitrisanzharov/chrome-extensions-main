@@ -5,6 +5,13 @@
     const isYouTube = window.location.hostname === 'www.youtube.com';
 
     if (isYouTube) {
+
+
+        function moveTimeStamp(timeStamp){
+            console.log("timeStamp: ", timeStamp);
+            document.querySelector('video').currentTime = timeStamp;
+        }
+
         // main code
 
         function addButtonFn(message) {
@@ -70,9 +77,9 @@
 
             const isYouTube = message.type === 'YOUTUBE_VIDEO';
 
-            // if (isYouTube) {
-            //     addButtonFn(message);
-            // }
+            if (message.message === 'timeStamp') {
+                moveTimeStamp(message.arg)
+            }
         });
 
         // end of isYoutube code
