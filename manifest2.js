@@ -9,6 +9,12 @@ let file = {
     ],
     hosts_permissions: ["https://*.youtube.com/*"],
     background: {
-        service_worker: "background.js"
-    }
+        service_worker: 'background.js'
+    },
+    content_scripts: [
+        {
+            matches: ['*.youtube.someUrlOrAllOfThem', 'site2', 'site3'],
+            js: ['folderName/content.js', 'folderName2/fileName2.js']
+        }
+    ]
 }
