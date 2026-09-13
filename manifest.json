@@ -5,7 +5,8 @@
     "manifest_version": 3,
     "permissions": ["tabs", "activeTab", "storage", "scripting", "contextMenus", "notifications", "alarms"],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "background.js",
+        "type": "module"
     },
     "content_scripts": [
         {
@@ -14,12 +15,20 @@
         }
     ],
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_title": "from actions key",
+        "default_icon": "./assets/sparta.png",
+        "randomKey": "yes"
     },
     "web_accessible_resources": [
         {
             "resources": ["assets/*"],
             "matches": ["<all_urls>"]
         }
-    ]
+    ],
+    "icons": {
+        "16": "assets/img1.png",
+        "48": "assets/img1.png",
+        "128": "assets/img1.png"
+    }
 }

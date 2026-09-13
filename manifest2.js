@@ -16,5 +16,11 @@ let file = {
             matches: ['*.youtube.someUrlOrAllOfThem', 'site2', 'site3'],
             js: ['folderName/content.js', 'folderName2/fileName2.js']
         }
-    ]
+    ],
+    action: {
+        default_popup: "popup.html",
+        default_title: 'mah man'
+
+    }
+
 }
