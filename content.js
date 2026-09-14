@@ -1,4 +1,14 @@
 (() => {
+    // get all items
+    chrome.storage.local.get(['foo', 'bar'], (result) => {
+        console.log('result of storage', result);
+    });
+
+    chrome.storage.local.get(null, (result) => {
+        console.log('result of ALL storage', result);
+    });
+
+    // all other
     console.log('chrome.tabs', chrome.tabs);
 
     console.log('content.js loaded');
