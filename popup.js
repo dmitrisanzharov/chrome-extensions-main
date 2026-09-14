@@ -15,13 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.local.set({ foo: 'foo in storage', bar: 'bar in storage' });
     });
 
-
     // delete
-       const deleteBtn = document.getElementById('deleteBtn');
+    const deleteBtn = document.getElementById('deleteBtn');
 
     deleteBtn.addEventListener('click', async () => {
         chrome.storage.local.remove('keyToDelete');
     });
-
-
 });

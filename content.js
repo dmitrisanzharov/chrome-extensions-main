@@ -15,8 +15,6 @@
 
     const devDiv = document.createElement('div');
 
-    devDiv.textContent = 'Hello';
-
     Object.assign(devDiv.style, {
         position: 'fixed',
         bottom: '0',
@@ -38,6 +36,7 @@
 
     const myImg1 = document.createElement('img');
     myImg1.src = chrome.runtime.getURL('assets/img1.png');
+    myImg1.title = 'click to add';
 
     Object.assign(myImg1.style, {
         height: '50px',
@@ -64,4 +63,47 @@
     // send message TO background
     console.log('sending message');
     chrome.runtime.sendMessage({ text: 'from content.js' });
+
+    // element after 5 seconds
+
+    let ytDiv = document.getElementById('start');
+
+    let redSquare = document.createElement('div');
+
+    function waitForElementToAppear(selector, callback) {
+        const allReadyExists = document.querySelector(selector);
+        console.log('allReadyExists: ', allReadyExists);
+
+        if (allReadyExists) {
+            callback(allReadyExists);
+            return;
+        }
+
+        const observer = new MutationObserver(() => {
+            const elementThatIsDueToAppear = document.querySelector(selector);
+
+            if (elementThatIsDueToAppear) {
+                observer.disconnect();
+                callback(elementThatIsDueToAppear);
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    waitForElementToAppear('#start', (element) => {
+        console.log('triggered');
+        Object.assign(redSquare.style, {
+            height: '100px',
+            width: '100px',
+            backgroundColor: 'red'
+        });
+
+        element.appendChild(redSquare);
+    });
+
+    // 
 })();
