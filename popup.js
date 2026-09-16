@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // BUTTONS
 
-                const mainUl = document.getElementById('mainUl');
+        const mainUl = document.getElementById('mainUl');
         console.log('mainUl: ', mainUl);
 
         const clearAllBtnConst = document.getElementById('clearAllBtn');
@@ -30,8 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             chrome.storage.local.clear();
             mainUl.innerHTML = 'no bookmarks';
         });
-
-        
 
         // STUFF FOR UL AND LIST
 
